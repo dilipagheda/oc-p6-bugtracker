@@ -1,0 +1,2 @@
+# Bug Tracker
+This is the 6th Project as part of Openclassroom's Backend .NET Path. It is about creating a backend side of a BugTracker application. It involves creating code-first migration using entity framework, creation of stored procedures in SQL server to retrieve data and writing repository class as an interface to the database for front end client. It also involves writing integration tests to ensure that data access logic works as intended.
