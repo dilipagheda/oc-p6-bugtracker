@@ -10,6 +10,32 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_KEYWORDS_STATUS.sql" />
+    <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_STATUS.sql" />
+    <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_VERSION_KEYWORDS_STATUS.sql" />
+    <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_VERSION_STATUS.sql" />
+    <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_KEYWORDS_STATUS.sql" />
+    <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_PRODUCTNAME_KEYWORDS_STATUS.sql" />
+    <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_PRODUCTNAME_STATUS.sql" />
+    <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_PRODUCTNAME_VERSION_KEYWORDS_STATUS.sql" />
+    <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_PRODUCTNAME_VERSION_STATUS.sql" />
+    <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_STATUS.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_KEYWORDS_STATUS.sql" />
+    <EmbeddedResource Include="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_STATUS.sql" />
+    <EmbeddedResource Include="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_VERSION_KEYWORDS_STATUS.sql" />
+    <EmbeddedResource Include="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_VERSION_STATUS.sql" />
+    <EmbeddedResource Include="Data\StoredProc\GET_ALL_ISSUES_BY_KEYWORDS_STATUS.sql" />
+    <EmbeddedResource Include="Data\StoredProc\GET_ALL_ISSUES_BY_PRODUCTNAME_KEYWORDS_STATUS.sql" />
+    <EmbeddedResource Include="Data\StoredProc\GET_ALL_ISSUES_BY_PRODUCTNAME_STATUS.sql" />
+    <EmbeddedResource Include="Data\StoredProc\GET_ALL_ISSUES_BY_PRODUCTNAME_VERSION_KEYWORDS_STATUS.sql" />
+    <EmbeddedResource Include="Data\StoredProc\GET_ALL_ISSUES_BY_PRODUCTNAME_VERSION_STATUS.sql" />
+    <EmbeddedResource Include="Data\StoredProc\GET_ALL_ISSUES_BY_STATUS.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Bogus" Version="29.0.2" />
     <PackageReference Include="Dapper.Contrib" Version="2.0.35" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.4" />
