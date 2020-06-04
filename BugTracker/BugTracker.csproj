@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200602110505_Initial_!.cs" />
-    <Compile Remove="Migrations\20200602110505_Initial_!.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_KEYWORDS_STATUS.sql" />
     <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_STATUS.sql" />
     <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_VERSION_KEYWORDS_STATUS.sql" />
