@@ -9,8 +9,6 @@ namespace BugTracker.Data.Repository
 {
     public interface IBugTrackerRepository
     {
-        List<IssueViewModel> GetAllIssuesByStatusAsync(string status);
-
-        IDbConnection Connection { get; }
+        Task<List<IssueViewModel>> GetAllIssuesByStatusAsync(string status);
     }
 }
