@@ -2,9 +2,6 @@
   GO
   CREATE PROCEDURE GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_VERSION_KEYWORDS_STATUS  @MinDate nvarchar(10), @MaxDate nvarchar(10), @ProductName nvarchar(max),@VersionName nvarchar(max), @Keywords nvarchar(max) , @Status nvarchar(max)
   AS
-  DECLARE @searchPredicate varchar(max);
-
-  SELECT  @searchPredicate = REPLACE(@Keywords,';','%');
 
   SELECT I.Id, P.ProductName, V.VersionName, O.OSName, S.Status, I.Description, I.Resolution, I.CreationDate, I.ResolutionDate 
   FROM Issues I, Products P, Versions V, OperatingSystems O, IssueStatusList S, ProductOSVersions POV
@@ -17,4 +14,4 @@
   AND P.ProductName = @ProductName
   AND V.VersionName = @VersionName
   AND CONVERT(date,I.CreationDate, 103) BETWEEN CONVERT(date,@MinDate,103) AND CONVERT(date,@MaxDate,103)
-  AND I.Description LIKE @searchPredicate
+  AND dbo.DescriptionContainsKeywords(I.Description,@Keywords) = 0
