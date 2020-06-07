@@ -30,7 +30,7 @@ This project uses
 
 
 
-# Entity Relationshipt diagram
+# Entity Relationship diagram
 
 ![](https://github.com/dilipagheda/oc-p6-bugtracker/blob/master/screenshots/database-diagram.PNG)
 
