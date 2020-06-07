@@ -28,12 +28,21 @@ This project uses
 
 •	Razor, C# and JavaScript for rendering Views for supporting Frontend side
 
+* xUnit for Integration testing
+
+* Faker library for generating random seed data for testing
 
 
 # Entity Relationship diagram
 
 ![](https://github.com/dilipagheda/oc-p6-bugtracker/blob/master/screenshots/database-diagram.PNG)
 
+
+# Integration test report
+
+Integration tests are written against the real db instance to verify all stored procs end to end. Please note that if you change the seed data then you will need to change test data used for testing.
+
+![](https://github.com/dilipagheda/oc-p6-bugtracker/blob/master/screenshots/integration_tests_report.PNG)
 
 # Stored Procedures
 
