@@ -5,7 +5,7 @@ AS BEGIN
 	DECLARE @TotalKeyWords int
 
 	set @MatchCount = (select count(a.value) from 
-	(select distinct value from string_split(@desc,' ')) a,
+	(select distinct REPLACE(value,'.','') as value from string_split(@desc,' ')) a,
 	(select distinct value from string_split(@keywords, ';')) b
 	where REPLACE(a.value,'.','') = b.value)
 
