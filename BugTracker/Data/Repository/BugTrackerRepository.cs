@@ -60,7 +60,7 @@ namespace BugTracker.Data.Repository
         {
             var result = await _dbContext.LoadStoredProc("GET_ALL_ISSUES_BY_PRODUCTNAME_VERSION_STATUS")
                 .WithSqlParam("ProductName", productName)
-                .WithSqlParam("Version", version)
+                .WithSqlParam("VersionName", version)
                 .WithSqlParam("Status", status)
                 .ExecuteStoredProc<IssueViewModel>();
 
@@ -111,7 +111,7 @@ namespace BugTracker.Data.Repository
                 .WithSqlParam("MinDate", minDate)
                 .WithSqlParam("MaxDate", maxDate)
                 .WithSqlParam("ProductName", productName)
-                .WithSqlParam("Version", version)
+                .WithSqlParam("VersionName", version)
                 .WithSqlParam("Status", status)
                 .ExecuteStoredProc<IssueViewModel>();
 
@@ -128,7 +128,7 @@ namespace BugTracker.Data.Repository
         public async Task<List<IssueViewModel>> GetAllIssuesBy_Keywords_StatusAsync(List<string> keywords,
                                                                                     string status)
         {
-            string _keywords = $";{String.Join(";", keywords.ToArray())};";
+            string _keywords = $"{String.Join(";", keywords.ToArray())}";
 
             var result = await _dbContext.LoadStoredProc("GET_ALL_ISSUES_BY_KEYWORDS_STATUS")
                 .WithSqlParam("Keywords", _keywords)
@@ -150,7 +150,7 @@ namespace BugTracker.Data.Repository
                                                                                                 List<string> keywords,
                                                                                                 string status)
         {
-            string _keywords = $";{String.Join(";", keywords.ToArray())};";
+            string _keywords = $"{String.Join(";", keywords.ToArray())}";
 
             var result = await _dbContext.LoadStoredProc("GET_ALL_ISSUES_BY_PRODUCTNAME_KEYWORDS_STATUS")
                 .WithSqlParam("ProductName", productName)
@@ -175,11 +175,11 @@ namespace BugTracker.Data.Repository
                                                                                                         List<string> keywords,
                                                                                                         string status)
         {
-            string _keywords = $";{String.Join(";", keywords.ToArray())};";
+            string _keywords = $"{String.Join(";", keywords.ToArray())}";
 
             var result = await _dbContext.LoadStoredProc("GET_ALL_ISSUES_BY_PRODUCTNAME_VERSION_KEYWORDS_STATUS")
                 .WithSqlParam("ProductName", productName)
-                .WithSqlParam("Version", version)
+                .WithSqlParam("VersionName", version)
                 .WithSqlParam("Keywords", _keywords)
                 .WithSqlParam("Status", status)
                 .ExecuteStoredProc<IssueViewModel>();
@@ -203,7 +203,7 @@ namespace BugTracker.Data.Repository
                                                                                                           List<string> keywords,
                                                                                                           string status)
         {
-            string _keywords = $";{String.Join(";", keywords.ToArray())};";
+            string _keywords = $"{String.Join(";", keywords.ToArray())}";
 
             var result = await _dbContext.LoadStoredProc("GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_KEYWORDS_STATUS")
                 .WithSqlParam("MinDate", minDate)
@@ -234,14 +234,14 @@ namespace BugTracker.Data.Repository
                                                                                                                   List<string> keywords,
                                                                                                                   string status)
         {
-            string _keywords = $";{String.Join(";", keywords.ToArray())};";
+            string _keywords = $"{String.Join(";", keywords.ToArray())}";
 
             var result = await _dbContext.LoadStoredProc("GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_VERSION_KEYWORDS_STATUS")
                 .WithSqlParam("MinDate", minDate)
                 .WithSqlParam("MaxDate", maxDate)
                 .WithSqlParam("ProductName", productName)
                 .WithSqlParam("Keywords", _keywords)
-                .WithSqlParam("Version", version)
+                .WithSqlParam("VersionName", version)
                 .WithSqlParam("Status", status)
                 .ExecuteStoredProc<IssueViewModel>();
 
