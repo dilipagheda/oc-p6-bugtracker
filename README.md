@@ -113,7 +113,7 @@ Keywords should be delimited by ;
 
 e.g., ‘abc;def;geh’ contains three separate keywords.
 
-Note: Only those issues will be returned that contains all given keywords.
+Note: Only those issues will be returned that contains any of the given keywords. Keywords are based on pattern matching so it matches the keyword in a sentence , phrase as well as the whole word.
 
 ### Input Parameters
 •	VersionName
