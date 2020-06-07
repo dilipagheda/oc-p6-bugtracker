@@ -1,16 +1,24 @@
-﻿CREATE FUNCTION DescriptionContainsKeywords (@desc VARCHAR(max), @keywords nvarchar(max))
+﻿-- =========================================================================================
+
+-- Author: Dilip Agheda
+
+-- Create date: 08/06/2020
+
+-- Description: A function which returns total matches in a description based on keywords
+
+-- =========================================================================================
+CREATE FUNCTION DescriptionContainsKeywords (@desc VARCHAR(max), @keywords nvarchar(max))
 RETURNS int
 AS BEGIN
     DECLARE @MatchCount int
 	DECLARE @TotalKeyWords int
+	DECLARE @Result bit
 
-	set @MatchCount = (select count(a.value) from 
-	(select distinct REPLACE(value,'.','') as value from string_split(@desc,' ')) a,
+	set @MatchCount = (select count(distinct a.value) from 
+	(select distinct value from string_split(@desc,' ')) a,
 	(select distinct value from string_split(@keywords, ';')) b
-	where REPLACE(a.value,'.','') = b.value)
+	where '%'+a.value+'%' LIKE '%'+b.value+'%'  )
 
-	select @TotalKeyWords = (select count(a.value) from (select value from string_split(@keywords, ';')) a)
+	return @MatchCount
 
-
-    RETURN @MatchCount - @TotalKeyWords
 END

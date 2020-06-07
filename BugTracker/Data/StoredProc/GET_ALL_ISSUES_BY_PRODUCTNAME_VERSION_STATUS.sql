@@ -1,4 +1,14 @@
-﻿  DROP PROCEDURE IF EXISTS GET_ALL_ISSUES_BY_PRODUCTNAME_VERSION_STATUS
+﻿-- ==========================================================================================================
+
+-- Author: Dilip Agheda
+
+-- Create date: 08/06/2020
+
+-- Description: A stored proc which returns issues filtered by product name, version and status
+
+-- ==========================================================================================================
+
+  DROP PROCEDURE IF EXISTS GET_ALL_ISSUES_BY_PRODUCTNAME_VERSION_STATUS
   GO
 
   CREATE PROCEDURE GET_ALL_ISSUES_BY_PRODUCTNAME_VERSION_STATUS @VersionName nvarchar(max), @ProductName nvarchar(max), @Status nvarchar(max)

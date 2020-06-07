@@ -1,4 +1,12 @@
-﻿
+﻿-- ==========================================================================================================
+
+-- Author: Dilip Agheda
+
+-- Create date: 08/06/2020
+
+-- Description: A stored proc which returns issues filtered by date range, product name, keywords  and status
+
+-- ==========================================================================================================
   DROP PROCEDURE IF EXISTS GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_KEYWORDS_STATUS
   GO
   CREATE PROCEDURE GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_KEYWORDS_STATUS  @MinDate nvarchar(10), @MaxDate nvarchar(10), @ProductName nvarchar(max), @Keywords nvarchar(max) , @Status nvarchar(max)
@@ -14,4 +22,4 @@
   AND S.Status = @Status
   AND P.ProductName = @ProductName
   AND CONVERT(date,I.CreationDate, 103) BETWEEN CONVERT(date,@MinDate,103) AND CONVERT(date,@MaxDate,103)
-  AND dbo.DescriptionContainsKeywords(I.Description,@Keywords) = 0
+  AND dbo.DescriptionContainsKeywords(I.Description,@Keywords) > 0

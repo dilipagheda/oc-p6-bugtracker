@@ -1,4 +1,14 @@
-﻿  DROP PROCEDURE IF EXISTS GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_VERSION_STATUS
+﻿-- ==========================================================================================================
+
+-- Author: Dilip Agheda
+
+-- Create date: 08/06/2020
+
+-- Description: A stored proc which returns issues filtered by date range, product name, version and status
+
+-- ==========================================================================================================
+
+  DROP PROCEDURE IF EXISTS GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_VERSION_STATUS
   GO
 
   CREATE PROCEDURE GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_VERSION_STATUS  @MinDate nvarchar(10), @MaxDate nvarchar(10), @ProductName nvarchar(max),@VersionName nvarchar(max), @Status nvarchar(max)
