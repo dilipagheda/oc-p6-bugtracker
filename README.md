@@ -32,6 +32,18 @@ This project uses
 
 * Faker library for generating random seed data for testing
 
+# How to run locally
+
+You will need Microsoft Visual Studio 2019, MS-SQL Server 2017 and Windows 10 to run this project locally.
+
+* Close this repo
+* Update database `ConnectionString` to point to your local or remote SQL server instance in `appsettings.json`
+```
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=BugTracker;Trusted_Connection=True;MultipleActiveResultSets=true"
+  },
+```  
+* Run `Update-Database` in the `Package Manager Console`. This command will create all required database tables, stored procs and function for you. It will also seed the database with 50 records for testing.
 
 # Entity Relationship diagram
 
