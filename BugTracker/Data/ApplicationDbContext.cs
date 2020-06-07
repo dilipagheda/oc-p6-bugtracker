@@ -33,19 +33,19 @@ namespace BugTracker.Data
                 .HasAlternateKey(x => new { x.ProductId, x.OperatingSystemId, x.VersionId });
 
             //Seed Data
-            builder.Entity<Product>().HasData(FakeDataUtils.GetFakeProducts(MAX_RECORDS));
-            builder.Entity<Version>().HasData(FakeDataUtils.GetFakeVersions(MAX_RECORDS));
+            builder.Entity<Product>().HasData(FakeDataUtils.GetFakeProducts());
+            builder.Entity<Version>().HasData(FakeDataUtils.GetFakeVersions());
 
             builder.Entity<OperatingSystem>().HasData(FakeDataUtils.GetFakeOperatingSystems());
             builder.Entity<IssueStatus>().HasData(FakeDataUtils.GetFakeIssueStatusList());
             var rangeConfig = new RangeConfigProductOSVersion()
             {
                 MinProductId = 1,
-                MaxProductId = MAX_RECORDS,
+                MaxProductId = FakeDataUtils.GetCountOfProductsList(),
                 MinOperatingSystemId = 1,
                 MaxOperatingSystemId = FakeDataUtils.GetCountOfOperatingSystem(),
                 MinVersionId = 1,
-                MaxVersionId = MAX_RECORDS
+                MaxVersionId = FakeDataUtils.GetCountOfVersionsList()
             };
             builder.Entity<ProductOSVersion>().HasData(FakeDataUtils.GetFakeProductOsVersions(MAX_RECORDS, rangeConfig));
             var rangeConfigIssue = new RangeConfigIssue()

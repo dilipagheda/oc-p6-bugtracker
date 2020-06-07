@@ -2,6 +2,7 @@
 using BugTracker.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using OperatingSystem = BugTracker.Data.Models.OperatingSystem;
 using Version = BugTracker.Data.Models.Version;
 
@@ -9,6 +10,39 @@ namespace BugTracker.Data.Utils
 {
     public static class FakeDataUtils
     {
+        private static readonly Product[] _products = new List<Product>()
+        {
+            new Product()
+            { Id = 1, ProductName = "Day Trader Wannabe" },
+            new Product()
+            { Id = 2, ProductName = "Investment Overlord" },
+            new Product()
+            { Id = 3, ProductName = "Workout Planner" },
+            new Product()
+            { Id = 4, ProductName = "Social Anxiety Planner" }
+        }.ToArray();
+
+        private static readonly Version[] _versions = new List<Version>()
+        {
+            new Version()
+            { Id = 1, VersionName = "1.0" },
+            new Version()
+            { Id = 2, VersionName = "1.1" },
+            new Version()
+            { Id = 3, VersionName = "1.2" },
+            new Version()
+            { Id = 4, VersionName = "1.3" },
+            new Version()
+            { Id = 5, VersionName = "2.0" },
+            new Version()
+            { Id = 6, VersionName = "2.1" },
+            new Version()
+            { Id = 7, VersionName = "2.2" },
+            new Version()
+            { Id = 8, VersionName = "2.3" }
+        }.ToArray();
+
+
         private static readonly  OperatingSystem[] _operatingSystemList = new List<OperatingSystem>()
         {
             new OperatingSystem()
@@ -42,31 +76,13 @@ namespace BugTracker.Data.Utils
 
         public static int GetCountOfIssueStatusList() => _issueStatusList.Length;
 
-        public static Product[] GetFakeProducts(int count)
-        {
-            var fakeProducts = new List<Product>();
-            var faker = new Faker("en"); // default en
+        public static int GetCountOfProductsList() => _products.Length;
 
-            for(int i = 0; i < count; i++)
-            {
-                var product = new Product() { Id = i + 1, ProductName = faker.Commerce.ProductName() };
-                fakeProducts.Add(product);
-            }
-            return fakeProducts.ToArray();
-        }
+        public static int GetCountOfVersionsList() => _versions.Length;
 
-        public static Version[] GetFakeVersions(int count)
-        {
-            var fakeVersions = new List<Version>();
-            var faker = new Faker("en"); // default en
+        public static Product[] GetFakeProducts() { return _products; }
 
-            for(int i = 0; i < count; i++)
-            {
-                var version = new Version() { Id = i + 1, VersionName = faker.System.Version().ToString() };
-                fakeVersions.Add(version);
-            }
-            return fakeVersions.ToArray();
-        }
+        public static Version[] GetFakeVersions() { return _versions; }
 
         public static OperatingSystem[] GetFakeOperatingSystems() { return _operatingSystemList; }
 
@@ -77,17 +93,24 @@ namespace BugTracker.Data.Utils
             var fakeProductOsVersions = new List<ProductOSVersion>();
             var faker = new Faker("en"); // default en
 
-            for(int i = 0; i < count; i++)
+            for(int i = 0; i < count; )
             {
+                var osId = faker.Random.Number(rangeConfig.MinOperatingSystemId, rangeConfig.MaxOperatingSystemId);
+                var versionId = faker.Random.Number(rangeConfig.MinVersionId, rangeConfig.MaxVersionId);
+                var prodId = faker.Random.Number(rangeConfig.MinProductId, rangeConfig.MaxProductId);
                 var productOsVersion = new ProductOSVersion()
+                { Id = i + 1, ProductId = prodId, OperatingSystemId = osId, VersionId = versionId, };
+
+                if(fakeProductOsVersions.Exists(x => x.OperatingSystemId == osId &&
+                    x.VersionId == versionId &&
+                    x.ProductId == prodId))
                 {
-                    Id = i + 1,
-                    ProductId = faker.Random.Number(rangeConfig.MinProductId, rangeConfig.MaxProductId),
-                    OperatingSystemId =
-                    faker.Random.Number(rangeConfig.MinOperatingSystemId, rangeConfig.MaxOperatingSystemId),
-                    VersionId = faker.Random.Number(rangeConfig.MinVersionId, rangeConfig.MaxVersionId),
-                };
-                fakeProductOsVersions.Add(productOsVersion);
+                    continue;
+                } else
+                {
+                    fakeProductOsVersions.Add(productOsVersion);
+                    i++;
+                }
             }
             return fakeProductOsVersions.ToArray();
         }
@@ -115,11 +138,12 @@ namespace BugTracker.Data.Utils
                     Id = i + 1,
                     ProductOSVersionId = productOsVersionId,
                     IssueStatusId = issueStatusId,
-                    Description = faker.Lorem.Paragraph(),
+                    Description = $"{faker.Hacker.Phrase()} {faker.System.Exception()} { faker.Lorem.Paragraph() }",
                     Resolution = resolution,
                     CreationDate = creationDate,
                     ResolutionDate = resolutionDate
                 };
+
                 fakeIssues.Add(issue);
             }
             return fakeIssues.ToArray();
