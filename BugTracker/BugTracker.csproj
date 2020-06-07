@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\StoredProc\Function_DescriptionContainsKeyword.sql" />
     <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_KEYWORDS_STATUS.sql" />
     <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_STATUS.sql" />
     <None Remove="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_VERSION_KEYWORDS_STATUS.sql" />
@@ -18,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Data\StoredProc\Function_DescriptionContainsKeyword.sql" />
     <EmbeddedResource Include="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_KEYWORDS_STATUS.sql" />
     <EmbeddedResource Include="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_STATUS.sql" />
     <EmbeddedResource Include="Data\StoredProc\GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_VERSION_KEYWORDS_STATUS.sql" />
