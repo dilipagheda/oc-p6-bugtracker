@@ -10,15 +10,13 @@ namespace IntegrationTests.TestData
         private readonly List<object[]> _data = new List<object[]>
         {
             new object[]
-            { new List<string> { "Sunt", "inventore" }, "created" },
+            { new List<string> { "need", "virtual", "we" }, "created", 9 },
             new object[]
-            { new List<string> { "inventore", "Sunt", }, "created" },
+            { new List<string> { "need", "virtual", "we" }, "in progress", 7 },
             new object[]
-            { new List<string> { "placeat", "Sapiente", "dicta" }, "in progress" },
+            { new List<string> { "need", "virtual", "we" }, "resolved", 6 },
             new object[]
-            { new List<string> { "perspiciatis" }, "resolved" },
-            new object[]
-            { new List<string> { "voluptate", "asperiores", "voluptatibus", "deserunt" }, "closed" },
+            { new List<string> { "need", "virtual", "we" }, "closed", 7 },
         };
 
         public IEnumerator<object[]> GetEnumerator() { return _data.GetEnumerator(); }

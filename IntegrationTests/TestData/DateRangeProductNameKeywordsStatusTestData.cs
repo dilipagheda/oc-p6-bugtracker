@@ -10,34 +10,15 @@ namespace IntegrationTests.TestData
         private readonly List<object[]> _data = new List<object[]>
         {
             new object[]
-            {
-                "04/06/2020",
-                "04/06/2020",
-                "Intelligent Concrete Soap",
-                new List<string>
-                { "excepturi", "quas" },
-                "created"
-            },
+            { "06/06/2020", "08/06/2020", "Workout Planner", new List<string> { "calculating" }, "created", 1 },
             new object[]
-            {
-                "03/06/2020",
-                "03/06/2020",
-                "Handmade Rubber Shoes",
-                new List<string>
-                { "perferendis", "dolores", "iste" },
-                "in progress"
-            },
+            { "06/06/2020", "08/06/2020", "Workout Planner", new List<string> { "SAS", "interface" }, "in progress", 1 },
             new object[]
-            { "04/06/2020", "04/06/2020", "Unbranded Plastic Soap", new List<string> { "autem" }, "resolved" },
+            { "06/06/2020", "08/06/2020", "Workout Planner", new List<string> { "calculating" }, "in progress", 0 },
             new object[]
-            {
-                "03/06/2020",
-                "04/06/2020",
-                "Tasty Cotton Soap",
-                new List<string>
-                { "minus", "Laboriosam", "autem", "odio" },
-                "closed"
-            },
+            { "06/06/2020", "08/06/2020", "Workout Planner", new List<string> { "quantifying" }, "resolved", 1 },
+            new object[]
+            { "06/06/2020", "08/06/2020", "Workout Planner", new List<string> { "JSON" }, "closed", 1 },
         };
 
         public IEnumerator<object[]> GetEnumerator() { return _data.GetEnumerator(); }

@@ -1,6 +1,7 @@
 using BugTracker.Data;
 using BugTracker.Data.Repository;
 using IntegrationTests.TestData;
+using IntegrationTests.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -25,11 +26,11 @@ namespace IntegrationTests
         }
 
         [Theory]
-        [InlineData("closed")]
-        [InlineData("created")]
-        [InlineData("in progress")]
-        [InlineData("resolved")]
-        public async Task GetAllIssuesByStatus_ShouldReturnCorrectResult(string status)
+        [InlineData("closed",10)]
+        [InlineData("created",14)]
+        [InlineData("in progress",14)]
+        [InlineData("resolved",12)]
+        public async Task GetAllIssuesByStatus_ShouldReturnCorrectResult(string status, int totalCount)
         {
             //Arrange
             var sut = new BugTrackerRepository(_applicationDbContext);
@@ -38,17 +39,19 @@ namespace IntegrationTests
             var result = await sut.GetAllIssuesByStatusAsync(status);
 
             //Assert
-            Assert.NotEmpty(result);
+            Assert.Equal(totalCount, result.Count);
             var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower()).ToList();
             Assert.Empty(unexpectedItems);
         }
 
         [Theory]
-        [InlineData("Intelligent Concrete Soap", "created")]
-        [InlineData("Incredible Granite Bacon", "in progress")]
-        [InlineData("Intelligent Fresh Pizza", "closed")]
-        [InlineData("Gorgeous Soft Pizza", "resolved")]
-        public async Task GetAllIssuesBy_ProductName_Status_ShouldReturnCorrectResult(string productName, string status)
+        [InlineData("Workout Planner", "created",6)]
+        [InlineData("Workout Planner", "in progress",1)]
+        [InlineData("Workout Planner", "closed",2)]
+        [InlineData("Workout Planner", "resolved",1)]
+        public async Task GetAllIssuesBy_ProductName_Status_ShouldReturnCorrectResult(string productName,
+                                                                                      string status,
+                                                                                      int totalCount)
         {
             //Arrange
             var sut = new BugTrackerRepository(_applicationDbContext);
@@ -57,7 +60,7 @@ namespace IntegrationTests
             var result = await sut.GetAllIssuesBy_ProductName_StatusAsync(productName, status);
 
             //Assert
-            Assert.NotEmpty(result);
+            Assert.Equal(totalCount, result.Count);
             var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower() &&
                 x.ProductName.ToLower() != productName.ToLower())
                 .ToList();
@@ -65,22 +68,23 @@ namespace IntegrationTests
         }
 
         [Theory]
-        [InlineData("Licensed Cotton Table", "9.9.8.7", "resolved")]
-        [InlineData("Rustic Concrete Mouse", "3.9.7.3", "created")]
-        [InlineData("Sleek Plastic Sausages", "9.8.8.7", "in progress")]
-        [InlineData("Tasty Cotton Soap", "3.2.6.0", "closed")]
+        [InlineData("Workout Planner", "1.2", "resolved",1)]
+        [InlineData("Workout Planner", "1.0", "created",3)]
+        [InlineData("Workout Planner", "1.0", "in progress",1)]
+        [InlineData("Workout Planner", "2.3", "closed",1)]
         public async Task GetAllIssuesBy_ProductName_Version_Status_ShouldReturnCorrectResult(string productName,
                                                                                               string version,
-                                                                                              string status)
+                                                                                              string status,
+                                                                                              int totalCount)
         {
             //Arrange
             var sut = new BugTrackerRepository(_applicationDbContext);
 
             //Act
-            var result = await sut.GetAllIssuesBy_ProductName_StatusAsync(productName, status);
+            var result = await sut.GetAllIssuesBy_ProductName_Version_StatusAsync(productName, version, status);
 
             //Assert
-            Assert.NotEmpty(result);
+            Assert.Equal(totalCount, result.Count);
             var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower() &&
                 x.ProductName.ToLower() != productName.ToLower() &&
                 x.VersionName.ToLower() != version.ToLower())
@@ -89,14 +93,16 @@ namespace IntegrationTests
         }
 
         [Theory]
-        [InlineData("04/06/2020","05/06/2020","Intelligent Concrete Soap","created")]
-        [InlineData("04/06/2020", "05/06/2020", "Ergonomic Fresh Gloves", "resolved")]
-        [InlineData("04/06/2020", "05/06/2020", "Small Soft Tuna", "in progress")]
-        [InlineData("01/06/2020", "05/06/2020", "Tasty Cotton Soap", "closed")]
+        [InlineData("06/06/2020", "06/06/2020", "Workout Planner", "created",1)]
+        [InlineData("08/06/2020", "10/06/2020", "Workout Planner", "created", 0)]
+        [InlineData("06/06/2020", "07/06/2020", "Workout Planner", "resolved",1)]
+        [InlineData("06/06/2020", "07/06/2020", "Workout Planner", "in progress",1)]
+        [InlineData("06/06/2020", "07/06/2020", "Workout Planner", "closed",2)]
         public async Task GetAllIssuesBy_DateRange_ProductName_StatusAsync(string minDate,
                                                                            string maxDate,
                                                                            string productName,
-                                                                           string status)
+                                                                           string status,
+                                                                           int totalCount)
         {
             //Arrange
             var sut = new BugTrackerRepository(_applicationDbContext);
@@ -109,6 +115,7 @@ namespace IntegrationTests
 
             //Assert
             Assert.NotEmpty(result);
+            Assert.Equal(totalCount, result.Count);
             var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower() &&
                 x.ProductName.ToLower() != productName.ToLower() &&
                 x.CreationDate >= DateTime.Parse(minDate, new CultureInfo("en-AU")) &&
@@ -119,15 +126,17 @@ namespace IntegrationTests
         }
 
         [Theory]
-        [InlineData("04/06/2020", "05/06/2020", "Intelligent Concrete Soap", "5.6.2.3", "created")]
-        [InlineData("04/06/2020", "05/06/2020", "Ergonomic Fresh Gloves", "8.1.6.0","resolved")]
-        [InlineData("04/06/2020", "05/06/2020", "Small Soft Tuna", "9.8.8.7", "in progress")]
-        [InlineData("01/06/2020", "05/06/2020", "Tasty Cotton Soap", "3.2.6.0","closed")]
+        [InlineData("06/06/2020", "08/06/2020", "Workout Planner","1.0", "created", 3)]
+        [InlineData("06/06/2020", "08/06/2020", "Workout Planner", "9.0", "created", 0)]
+        [InlineData("06/06/2020", "07/06/2020", "Workout Planner","1.2", "resolved", 1)]
+        [InlineData("06/06/2020", "07/06/2020", "Workout Planner","1.0", "in progress", 1)]
+        [InlineData("06/06/2020", "07/06/2020", "Workout Planner","2.3", "closed", 1)]
         public async Task GetAllIssuesBy_DateRange_ProductName_Version_Status_ShouldReturnCorrectResult(string minDate,
                                                                                                         string maxDate,
                                                                                                         string productName,
                                                                                                         string version,
-                                                                                                        string status)
+                                                                                                        string status,
+                                                                                                        int totalCount)
         {
             //Arrange
             var sut = new BugTrackerRepository(_applicationDbContext);
@@ -140,7 +149,7 @@ namespace IntegrationTests
                                                                                             status);
 
             //Assert
-            Assert.NotEmpty(result);
+            Assert.Equal(totalCount, result.Count);
             var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower() &&
                 x.ProductName.ToLower() != productName.ToLower() &&
                 x.VersionName.ToLower() != version.ToLower() &&
@@ -152,7 +161,7 @@ namespace IntegrationTests
         }
 
         [Theory, ClassData(typeof(KeywordsStatusTestData))]
-        public async Task GetAllIssuesBy_Keywords_StatusAsync(List<string> keywords, string status)
+        public async Task GetAllIssuesBy_Keywords_StatusAsync(List<string> keywords, string status, int totalCount)
         {
             //Arrange
             var sut = new BugTrackerRepository(_applicationDbContext);
@@ -161,7 +170,13 @@ namespace IntegrationTests
             var result = await sut.GetAllIssuesBy_Keywords_StatusAsync(keywords, status);
 
             //Assert
-            Assert.NotEmpty(result);
+            Assert.Equal(totalCount, result.Count);
+            //Check for keywords
+            foreach(var item in result)
+            {
+                Assert.True(Helper.IsMatch(item.Description, keywords));
+            }
+
             var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower()).ToList();
 
             Assert.Empty(unexpectedItems);
@@ -170,7 +185,8 @@ namespace IntegrationTests
         [Theory, ClassData(typeof(ProductNameKeywordsStatusTestData))]
         public async Task GetAllIssuesBy_ProductName_Keywords_StatusAsync(string productName,
                                                                           List<string> keywords,
-                                                                          string status)
+                                                                          string status,
+                                                                          int totalCount)
         {
             //Arrange
             var sut = new BugTrackerRepository(_applicationDbContext);
@@ -179,7 +195,13 @@ namespace IntegrationTests
             var result = await sut.GetAllIssuesBy_ProductName_Keywords_StatusAsync(productName, keywords, status);
 
             //Assert
-            Assert.NotEmpty(result);
+            Assert.Equal(totalCount, result.Count);
+            //Check for keywords
+            foreach(var item in result)
+            {
+                Assert.True(Helper.IsMatch(item.Description, keywords));
+                Assert.Equal(productName, item.ProductName);
+            }
             var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower()).ToList();
 
             Assert.Empty(unexpectedItems);
@@ -189,7 +211,8 @@ namespace IntegrationTests
         public async Task GetAllIssuesBy_ProductName_Version_Keywords_StatusAsync(string productName,
                                                                                   string version,
                                                                                   List<string> keywords,
-                                                                                  string status)
+                                                                                  string status,
+                                                                                  int totalCount)
         {
             //Arrange
             var sut = new BugTrackerRepository(_applicationDbContext);
@@ -201,7 +224,13 @@ namespace IntegrationTests
                                                                                            status);
 
             //Assert
-            Assert.NotEmpty(result);
+            Assert.Equal(totalCount, result.Count);
+            //Check for keywords
+            foreach(var item in result)
+            {
+                Assert.True(Helper.IsMatch(item.Description, keywords));
+                Assert.Equal(productName, item.ProductName);
+            }
             var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower()).ToList();
 
             Assert.Empty(unexpectedItems);
@@ -212,7 +241,8 @@ namespace IntegrationTests
                                                                                     string maxDate,
                                                                                     string productName,
                                                                                     List<string> keywords,
-                                                                                    string status)
+                                                                                    string status,
+                                                                                    int totalCount)
         {
             //Arrange
             var sut = new BugTrackerRepository(_applicationDbContext);
@@ -225,7 +255,13 @@ namespace IntegrationTests
                                                                                              status);
 
             //Assert
-            Assert.NotEmpty(result);
+            Assert.Equal(totalCount, result.Count);
+            //Check for keywords
+            foreach(var item in result)
+            {
+                Assert.True(Helper.IsMatch(item.Description, keywords));
+                Assert.Equal(productName, item.ProductName);
+            }
             var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower()).ToList();
 
             Assert.Empty(unexpectedItems);
@@ -237,7 +273,8 @@ namespace IntegrationTests
                                                                                             string productName,
                                                                                             string version,
                                                                                             List<string> keywords,
-                                                                                            string status)
+                                                                                            string status,
+                                                                                            int totalCount)
         {
             //Arrange
             var sut = new BugTrackerRepository(_applicationDbContext);
@@ -251,7 +288,13 @@ namespace IntegrationTests
                                                                                                      status);
 
             //Assert
-            Assert.NotEmpty(result);
+            Assert.Equal(totalCount, result.Count);
+            //Check for keywords
+            foreach(var item in result)
+            {
+                Assert.True(Helper.IsMatch(item.Description, keywords));
+                Assert.Equal(productName, item.ProductName);
+            }
             var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower()).ToList();
 
             Assert.Empty(unexpectedItems);
