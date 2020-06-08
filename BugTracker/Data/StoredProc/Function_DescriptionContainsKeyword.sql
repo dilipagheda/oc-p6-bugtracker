@@ -6,6 +6,8 @@
 
 -- Description: A function which returns total matches in a description based on keywords
 
+-- Version: 1.0
+
 -- =========================================================================================
 CREATE FUNCTION DescriptionContainsKeywords (@desc VARCHAR(max), @keywords nvarchar(max))
 RETURNS int

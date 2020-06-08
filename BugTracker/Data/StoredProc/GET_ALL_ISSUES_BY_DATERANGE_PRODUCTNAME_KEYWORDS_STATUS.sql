@@ -6,6 +6,8 @@
 
 -- Description: A stored proc which returns issues filtered by date range, product name, keywords  and status
 
+-- Version: 1.0
+
 -- ==========================================================================================================
   DROP PROCEDURE IF EXISTS GET_ALL_ISSUES_BY_DATERANGE_PRODUCTNAME_KEYWORDS_STATUS
   GO

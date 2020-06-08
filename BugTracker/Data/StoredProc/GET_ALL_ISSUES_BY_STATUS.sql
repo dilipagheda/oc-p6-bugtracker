@@ -6,6 +6,9 @@
 
 -- Description: A stored proc which returns issues filtered by status
 -- status values are created, in progress, resolved and closed
+
+-- Version: 1.0
+
 -- ==========================================================================================================
 
   DROP PROCEDURE IF EXISTS GET_ALL_ISSUES_BY_STATUS
