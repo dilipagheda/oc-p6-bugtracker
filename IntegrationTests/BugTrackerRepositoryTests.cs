@@ -114,7 +114,6 @@ namespace IntegrationTests
                                                                                     status);
 
             //Assert
-            Assert.NotEmpty(result);
             Assert.Equal(totalCount, result.Count);
             var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower() &&
                 x.ProductName.ToLower() != productName.ToLower() &&
@@ -230,6 +229,7 @@ namespace IntegrationTests
             {
                 Assert.True(Helper.IsMatch(item.Description, keywords));
                 Assert.Equal(productName, item.ProductName);
+                Assert.Equal(version, item.VersionName);
             }
             var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower()).ToList();
 
@@ -262,7 +262,10 @@ namespace IntegrationTests
                 Assert.True(Helper.IsMatch(item.Description, keywords));
                 Assert.Equal(productName, item.ProductName);
             }
-            var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower()).ToList();
+            var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower() &&
+                x.CreationDate >= DateTime.Parse(minDate, new CultureInfo("en-AU")) &&
+                x.CreationDate <= DateTime.Parse(minDate, new CultureInfo("en-AU")))
+                .ToList();
 
             Assert.Empty(unexpectedItems);
         }
@@ -294,8 +297,12 @@ namespace IntegrationTests
             {
                 Assert.True(Helper.IsMatch(item.Description, keywords));
                 Assert.Equal(productName, item.ProductName);
+                Assert.Equal(version, item.VersionName);
             }
-            var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower()).ToList();
+            var unexpectedItems = result.Where(x => x.Status.ToLower() != status.ToLower() &&
+                x.CreationDate >= DateTime.Parse(minDate, new CultureInfo("en-AU")) &&
+                x.CreationDate <= DateTime.Parse(minDate, new CultureInfo("en-AU")))
+                .ToList();
 
             Assert.Empty(unexpectedItems);
         }
